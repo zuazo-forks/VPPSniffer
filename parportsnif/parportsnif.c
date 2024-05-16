@@ -58,7 +58,7 @@ struct vpp_st {
     struct file *pfd;
     unsigned int port;
     int bufsz;
-    struct timespec start;
+    struct timespec64 start;
     unsigned char chanvalues[3];
     unsigned char lastvalues[3];
 };
@@ -119,7 +119,7 @@ static void vpp_log_ols(struct vpp_st *vpp)
 {
     char buf[900];
     int sz;
-    struct timespec ts;
+    struct timespec64 ts;
     long long udelta;
     uint32_t samplenum;
 
@@ -129,7 +129,7 @@ static void vpp_log_ols(struct vpp_st *vpp)
     }
 
     memset(&ts, 0, sizeof(ts));
-    getnstimeofday(&ts);
+    ktime_get_real_ts64(&ts);
     
     // microseconds since "start"
     udelta = ((ts.tv_sec - vpp->start.tv_sec) * (long long)1000000);
@@ -148,10 +148,10 @@ static void vpp_log(struct vpp_st *vpp, const char *fmt, ...)
     char buf[900];
     va_list args;
     int sz;
-    struct timespec ts;
+    struct timespec64 ts;
 
     memset(&ts, 0, sizeof(ts));
-    getnstimeofday(&ts);
+    ktime_get_real_ts64(&ts);
 
     // current time
     sz = snprintf(buf, sizeof(buf), "# [%u.%u] ", (unsigned int)ts.tv_sec, (unsigned int)ts.tv_nsec);
@@ -194,7 +194,7 @@ static int device_open(struct inode *inode, struct file *file)
     log_write(";Channels: 32\n", strlen(";Channels: 32\n"));
     /* get the starting timestamp */
     memset(&vpp->start, 0, sizeof(vpp->start));
-    getnstimeofday(&vpp->start);
+    ktime_get_real_ts64(&vpp->start);
     /* log the initial reading */
     vpp_log_ols(vpp);
 	try_module_get(THIS_MODULE);
@@ -478,12 +478,12 @@ struct file_operations vpp_fops = {
 	.release = device_release,	/* a.k.a. close */
 };
 
-struct file_operations vlog_fops = {
-	.owner   = THIS_MODULE,
-	.open    = log_open,
-	.read    = log_read,
-    .poll    = log_poll,
-	.release = log_release
+struct proc_ops vlog_fops = {
+    .proc_open = log_open,
+    .proc_read = log_read,
+    // .proc_write = NULL,
+    .proc_poll = log_poll,
+    .proc_release = log_release,
 };
 
 static void vpp_attach(struct parport *port)

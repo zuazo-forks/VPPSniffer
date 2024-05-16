@@ -2,16 +2,16 @@
 
 ## Overview
 
-A simple Linux 3.X kernel modules for debugging and sniffing parallel port (LPT)applications without real physical port
+A simple Linux 5.X kernel modules for debugging and sniffing parallel port (LPT)applications without real physical port
 
 It also works with VirtualBox
 
-Tested in Linux Debian 8.0 (Jessie) with Linux kernel 3.16.0
+Tested in Linux Ubuntu 20.04.3 LTS (focal) with Linux kernel 5.11.0
 
 ## Contents
 
 - parportvirt: virtual parallel port sources kernel module
-- parportsnif: parallel port sniffer kernel module for linux 3.X
+- parportsnif: parallel port sniffer kernel module for linux 5.X
 - install_port: simple "make and install" script
 - set_vbox_settings: simple VirualBox configuring script
 

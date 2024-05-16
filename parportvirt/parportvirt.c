@@ -110,34 +110,42 @@ static void parport_uss720_restore_state(struct parport *pp, struct parport_stat
 /*########################################################################################################*/
 static size_t parport_uss720_epp_read_data(struct parport *pp, void *buf, size_t length, int flags){
     printk("parport_uss720_epp_read_data\n");
+    return 0;
 }
 
 static size_t parport_uss720_epp_write_data(struct parport *pp, const void *buf, size_t length, int flags){
     printk("size_t parport_uss720_epp_write_data\n");
+    return 0;
 }
 
 static size_t parport_uss720_epp_read_addr(struct parport *pp, void *buf, size_t length, int flags){
     printk("parport_uss720_epp_read_addr\n");
+    return 0;
 }
 
 static size_t parport_uss720_epp_write_addr(struct parport *pp, const void *buf, size_t length, int flags){
     printk("parport_uss720_epp_write_addr\n");
+    return 0;
 }
 
 static size_t parport_uss720_ecp_write_data(struct parport *pp, const void *buffer, size_t len, int flags){
     printk("parport_uss720_ecp_write_data\n");
+    return 0;
 }
 
 static size_t parport_uss720_ecp_read_data(struct parport *pp, void *buffer, size_t len, int flags){
     printk("parport_uss720_ecp_read_data\n");
+    return 0;
 }
 
 static size_t parport_uss720_ecp_write_addr(struct parport *pp, const void *buffer, size_t len, int flags){
     printk("parport_uss720_ecp_write_addr\n");
+    return 0;
 }
 
 static size_t parport_uss720_write_compat(struct parport *pp, const void *buffer, size_t len, int flags){
     printk("parport_uss720_write_compat\n");
+    return 0;
 }
 /*########################################################################################################*/
 
